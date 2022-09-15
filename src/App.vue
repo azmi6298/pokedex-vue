@@ -1,53 +1,48 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-import TheWelcome from "./components/TheWelcome.vue";
+import { ref, onMounted } from "vue";
+
+const isLoading = ref(true);
+const results = ref([]);
+const nextUrl = ref("");
+const baseURL = "https://pokeapi.co/api/v2";
+
+// fetch from pokedex api
+function fetchData() {
+  if (nextUrl.value == "") {
+    fetch(`${baseURL}/pokemon/?limit=10`)
+      .then((res) => res.json())
+      .then((data) => {
+        nextUrl.value = data.next;
+        results.value = [...data.results];
+      });
+  } else {
+    fetch(`${nextUrl.value}`)
+      .then((res) => res.json())
+      .then((data) => {
+        nextUrl.value = data.next;
+        results.value = [...results.value, ...data.results];
+      });
+  }
+}
+
+// fetch data on mounted
+onMounted(() => {
+  fetchData();
+  isLoading.value = false;
+});
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="./assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div class="flex flex-col px-36 py-16">
+    <div class="text-4xl">Pokedex App 👋🏼</div>
+    <div v-if="!isLoading">
+      <pre>{{ results }}</pre>
+      <button class="btn btn-primary max-w-md" @click="fetchData">
+        Load More
+      </button>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <div v-else>
+      <span class="text-4xl font-bold"> Loading..</span>
+    </div>
+  </div>
 </template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>

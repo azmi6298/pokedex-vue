@@ -37,12 +37,12 @@ onMounted(() => {
   <div class="flex flex-col text-center px-36 py-16 mb-8">
     <div class="text-4xl">Pokedex App ⚡️</div>
     <div v-if="!isLoading">
-      <div class="grid grid-cols-4 gap-y-8">
+      <div class="grid grid-cols-4 gap-8">
         <div v-for="(result, index) in results" :key="index">
           <CardComponent :name="result.name" :url="result.url" />
         </div>
       </div>
-      <button class="btn btn-primary max-w-md mt-8" @click="fetchData">
+      <button class="btn btn-warning max-w-md mt-16" @click="fetchData">
         Load More
       </button>
     </div>

@@ -1,15 +1,14 @@
 <template>
   <div class="card max-w-96 bg-base-100 shadow-xl">
     <div class="card-body flex">
-      <span>{{ name }}</span>
-      <span>{{ url }}</span>
+      <p class="capitalize text-2xl font-bold">{{ name }}</p>
     </div>
     <label
       for="my-modal-5"
       class="btn btn-warning modal-button"
       @click="handleModal"
     >
-      See More
+      See Details
     </label>
 
     <ModalComponent

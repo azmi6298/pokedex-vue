@@ -1,5 +1,5 @@
 <template>
-  <div class="card max-w-96 bg-base-100 shadow-xl">
+  <div class="card max-w-md bg-base-100 shadow-xl">
     <div class="card-body flex">
       <p class="capitalize text-2xl font-bold">{{ name }}</p>
     </div>

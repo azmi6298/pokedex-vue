@@ -83,8 +83,8 @@ function selectMenu(value) {
 </script>
 
 <template>
-  <div class="flex flex-col text-center px-36 py-16 mb-8">
-    <div class="text-4xl font-bold mb-16">Pokedex App ⚡️</div>
+  <div class="flex flex-col text-center px-12 lg:px-36 py-16 mb-8">
+    <div class="text-2xl lg:text-4xl font-bold mb-16">Pokedex App ⚡️</div>
     <div class="flex justify-center xl:justify-end mb-16">
       <div class="tabs tabs-boxed">
         <a

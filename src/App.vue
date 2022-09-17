@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
-import CardComponent from "./components/CardComponent.vue";
+import GridComponent from "./components/GridComponent.vue";
+
+const menuOptions = ["showAll", "filterByType"];
 
 const isLoading = ref(true);
 const results = ref([]);
@@ -8,6 +10,7 @@ const nextUrl = ref("");
 const baseURL = "https://pokeapi.co/api/v2";
 const pokemonTypes = ref([]);
 const selectedPokemonTypeUrl = ref(null);
+const currentMenu = ref(menuOptions[0]);
 
 // fetch pokemons from pokedex api
 function fetchData() {
@@ -65,14 +68,45 @@ watch(selectedPokemonTypeUrl, () => {
   isLoading.value = true;
   fetchByType();
 });
+
+function isShowAll() {
+  return currentMenu.value == menuOptions[0];
+}
+
+function isShowFilterByType() {
+  return currentMenu.value == menuOptions[1];
+}
+
+function selectMenu(value) {
+  currentMenu.value = value;
+}
 </script>
 
 <template>
   <div class="flex flex-col text-center px-36 py-16 mb-8">
     <div class="text-4xl font-bold mb-16">Pokedex App ⚡️</div>
+    <div class="flex flex-row-reverse mb-16">
+      <div class="tabs tabs-boxed">
+        <a
+          class="tab"
+          :class="{ 'tab-active': isShowAll() }"
+          @click="selectMenu(menuOptions[0])"
+        >
+          Show All
+        </a>
+        <a
+          class="tab"
+          :class="{ 'tab-active': isShowFilterByType() }"
+          @click="selectMenu(menuOptions[1])"
+        >
+          Filter by Type
+        </a>
+      </div>
+    </div>
     <div v-if="!isLoading">
       <select
         class="select select-warning w-full max-w-xs mb-16"
+        v-if="isShowFilterByType()"
         v-model="selectedPokemonTypeUrl"
       >
         <option disabled selected value="null">Filter by type..</option>
@@ -82,12 +116,12 @@ watch(selectedPokemonTypeUrl, () => {
           </option>
         </template>
       </select>
-      <div class="grid grid-cols-4 gap-8">
-        <div v-for="(result, index) in results" :key="index">
-          <CardComponent :name="result.name" :url="result.url" />
-        </div>
-      </div>
-      <button class="btn btn-warning max-w-md mt-16" @click="fetchData">
+      <GridComponent :results="results" />
+      <button
+        class="btn btn-warning max-w-md mt-16"
+        @click="fetchData"
+        v-if="isShowAll()"
+      >
         Load More
       </button>
     </div>

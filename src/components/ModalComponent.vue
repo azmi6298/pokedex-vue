@@ -19,14 +19,21 @@
               <img :src="sprite" class="object-contain h-36" />
             </template>
           </div>
-          <p class="text-xl font-semibold">Ability</p>
-          <template v-for="(ability, idx) in pokemonData.abilities" :key="idx">
-            <div>{{ ability }}</div>
-          </template>
-          <p class="text-xl font-semibold">Moves</p>
-          <template v-for="(move, idx) in pokemonData.moves" :key="idx">
-            <div>{{ move }}</div>
-          </template>
+          <div class="mb-8">
+            <p class="text-xl font-semibold">Ability</p>
+            <template
+              v-for="(ability, idx) in pokemonData.abilities"
+              :key="idx"
+            >
+              <div>{{ ability }}</div>
+            </template>
+          </div>
+          <div>
+            <p class="text-xl font-semibold">Moves</p>
+            <template v-for="(move, idx) in pokemonData.moves" :key="idx">
+              <div>{{ move }}</div>
+            </template>
+          </div>
         </div>
       </div>
     </div>

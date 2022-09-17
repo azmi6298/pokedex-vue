@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-4 gap-8">
+  <div class="grid xl:grid-cols-4 gap-8">
     <div v-for="(result, index) in results" :key="index">
       <CardComponent :name="result.name" :url="result.url" />
     </div>
